@@ -7,7 +7,7 @@ export const alerts: Alert[] = [
     severity: 'critical',
     title: 'Payment Service Error Rate Critical',
     message: 'Error rate exceeded 2% threshold (current: 2.1%)',
-    timestamp: '2024-03-29T09:45:00Z',
+    timestamp: '2026-03-28T09:45:00Z',
     status: 'active',
   },
   {
@@ -16,7 +16,7 @@ export const alerts: Alert[] = [
     severity: 'warning',
     title: 'Payment Service Response Time Degraded',
     message: 'Response time degraded (380ms > 200ms threshold)',
-    timestamp: '2024-03-29T09:30:00Z',
+    timestamp: '2026-03-28T09:30:00Z',
     status: 'active',
   },
 ];

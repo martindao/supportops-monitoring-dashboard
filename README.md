@@ -9,19 +9,17 @@ A professional monitoring dashboard demonstrating operational awareness and syst
 
 ## Screenshots
 
-These image slots are intentionally kept in the README as proof placeholders for the monitoring dashboard UI.
+Current captures from the live remake are saved under `docs/screenshots/`.
 
 | Dashboard Overview | Alert Table | Incident Panel |
 |-------------------|-------------|----------------|
-| ![Dashboard placeholder](docs/screenshots/dashboard.png) | ![Alerts placeholder](docs/screenshots/alerts.png) | ![Incident placeholder](docs/screenshots/incident.png) |
-
-> Replace the placeholder image files in `docs/screenshots/` with current captures from the remade UI.
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Alerts](docs/screenshots/alerts.png) | ![Incident](docs/screenshots/incident.png) |
 
 ## Source inspiration disclosure
 
-This portfolio rebuild is visually and structurally inspired by open-source observability platforms:
+This portfolio rebuild is visually and structurally inspired by open-source monitoring platforms:
 
-- **[SigNoz](https://github.com/SigNoz/signoz)** — service health visualization, alert management patterns, operational dashboard layout
+- **[Uptime Kuma](https://github.com/louislam/uptime-kuma)** — service health visualization, status page patterns, operational dashboard layout
 
 This is an original React implementation for portfolio use. The goal is to study real support product patterns and recreate the feel of that workflow in a smaller standalone app. No source code was copied from those projects.
 
@@ -232,7 +230,7 @@ This is an original inspired rebuild, not a direct clone. It demonstrates unders
 
 ## Inspiration
 
-This project was inspired by [SigNoz](https://github.com/SigNoz/signoz), an open-source observability platform. It is an original rebuild for portfolio demonstration purposes, not a direct clone.
+This project was inspired by [Uptime Kuma](https://github.com/louislam/uptime-kuma), an open-source monitoring platform. It is an original rebuild for portfolio demonstration purposes, not a direct clone.
 
 ## License
 

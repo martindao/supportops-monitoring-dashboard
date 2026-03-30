@@ -26,7 +26,7 @@ export const services: Service[] = [
       daysUntilExpiry: 78,
       issuer: 'Let\'s Encrypt',
     },
-    lastUpdated: '2024-03-29T10:30:00Z',
+    lastUpdated: '2026-03-28T10:30:00Z',
   },
   {
     id: 'user-service',
@@ -45,7 +45,7 @@ export const services: Service[] = [
       daysUntilExpiry: 52,
       issuer: 'DigiCert',
     },
-    lastUpdated: '2024-03-29T10:30:00Z',
+    lastUpdated: '2026-03-28T10:30:00Z',
   },
   {
     id: 'payment-service',
@@ -67,7 +67,7 @@ export const services: Service[] = [
       daysUntilExpiry: 12,
       issuer: 'Let\'s Encrypt',
     },
-    lastUpdated: '2024-03-29T10:30:00Z',
+    lastUpdated: '2026-03-28T10:30:00Z',
   },
   {
     id: 'notification-service',
@@ -86,6 +86,6 @@ export const services: Service[] = [
       daysUntilExpiry: 154,
       issuer: 'Let\'s Encrypt',
     },
-    lastUpdated: '2024-03-29T10:30:00Z',
+    lastUpdated: '2026-03-28T10:30:00Z',
   },
 ];
