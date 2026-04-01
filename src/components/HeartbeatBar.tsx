@@ -27,50 +27,89 @@ export function HeartbeatBar({ services }: HeartbeatBarProps) {
     });
   }, []);
 
-  return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-4">
-      <div className="flex items-center justify-between mb-3">
+return (
+    <div
+      className="heartbeat-container rounded-xl p-5"
+      style={{
+        background: 'var(--surface-800)'
+      }}
+    >
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-4">
-          <span className="text-sm font-medium text-gray-100">Heartbeat</span>
-          <div className="flex items-center gap-3 text-xs">
-            <span className="flex items-center gap-1.5 text-gray-400">
-              <span className="w-2 h-2 bg-emerald-500 rounded-sm" />
+          <span
+            className="text-sm font-medium"
+            style={{ color: 'var(--text-100)' }}
+          >
+            Heartbeat
+          </span>
+          <div className="flex items-center gap-4 text-xs">
+            <span
+              className="flex items-center gap-2"
+              style={{ color: 'var(--text-300)' }}
+            >
+              <span
+                className="w-2 h-2 rounded-sm"
+                style={{ background: 'var(--accent-primary)' }}
+              />
               {stats.up} Up
             </span>
             {stats.degraded > 0 && (
-              <span className="flex items-center gap-1.5 text-gray-400">
-                <span className="w-2 h-2 bg-amber-500 rounded-sm" />
+              <span
+                className="flex items-center gap-2"
+                style={{ color: 'var(--text-300)' }}
+              >
+                <span
+                  className="w-2 h-2 rounded-sm"
+                  style={{ background: 'var(--accent-secondary)' }}
+                />
                 {stats.degraded} Degraded
               </span>
             )}
             {stats.down > 0 && (
-              <span className="flex items-center gap-1.5 text-gray-400">
-                <span className="w-2 h-2 bg-rose-500 rounded-sm" />
+              <span
+                className="flex items-center gap-2"
+                style={{ color: 'var(--text-300)' }}
+              >
+                <span
+                  className="w-2 h-2 rounded-sm"
+                  style={{ background: 'var(--semantic-critical)' }}
+                />
                 {stats.down} Down
               </span>
             )}
           </div>
         </div>
-        <span className="text-xs text-gray-500">Last 24 hours</span>
+        <span
+          className="text-xs"
+          style={{ color: 'var(--text-400)' }}
+        >
+          Last 24 hours
+        </span>
       </div>
 
       {/* Heartbeat bars */}
-      <div className="flex items-end gap-1 h-8">
+      <div className="heartbeat-bars flex items-end">
         {bars.map((bar, index) => {
           const isLast = index === bars.length - 1;
           const heightPercent = isLast ? 100 : 60 + Math.random() * 40;
+          const statusClass = bar.status === 'up'
+            ? (isLast ? 'heartbeat-bar--now' : '')
+            : bar.status === 'degraded'
+            ? 'heartbeat-bar--degraded'
+            : 'heartbeat-bar--down';
 
           return (
             <div
               key={index}
-              className={`flex-1 rounded-sm transition-all duration-300 ${
-                bar.status === 'up'
-                  ? 'bg-emerald-500'
+              className={`heartbeat-bar flex-1 ${statusClass}`}
+              style={{
+                height: `${heightPercent}%`,
+                background: bar.status === 'up'
+                  ? 'var(--accent-primary)'
                   : bar.status === 'degraded'
-                  ? 'bg-amber-500'
-                  : 'bg-rose-500'
-              } ${isLast ? 'animate-pulse' : ''}`}
-              style={{ height: `${heightPercent}%` }}
+                  ? 'var(--accent-secondary)'
+                  : 'var(--semantic-critical)'
+              }}
               title={`Hour ${bar.hour}:00 - ${bar.status}`}
             />
           );
@@ -78,10 +117,13 @@ export function HeartbeatBar({ services }: HeartbeatBarProps) {
       </div>
 
       {/* Time labels */}
-      <div className="flex justify-between mt-2 text-[10px] text-gray-500">
+      <div
+        className="flex justify-between mt-3 text-[10px]"
+        style={{ color: 'var(--text-400)' }}
+      >
         <span>24h ago</span>
         <span>12h ago</span>
-        <span>Now</span>
+        <span style={{ color: 'var(--accent-primary)', fontWeight: 500 }}>Now</span>
       </div>
     </div>
   );

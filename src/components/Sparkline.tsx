@@ -33,7 +33,7 @@ export function Sparkline({
   const linePath = `M${points.join(' L')}`;
 
   return (
-    <svg width={width} height={height} className="overflow-visible">
+    <svg width={width} height={height} className="overflow-visible sparkline-enhanced" style={{ color }}>
       {/* Gradient definition */}
       <defs>
         <linearGradient id={`sparkline-gradient-${color.replace('#', '')}`} x1="0" y1="0" x2="0" y2="1">
@@ -63,7 +63,7 @@ export function Sparkline({
       <circle
         cx={width}
         cy={height - ((data[data.length - 1] - min) / range) * height}
-        r={3}
+        r={4}
         fill={color}
       />
     </svg>

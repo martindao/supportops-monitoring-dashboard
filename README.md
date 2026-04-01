@@ -7,6 +7,36 @@ A professional monitoring dashboard demonstrating operational awareness and syst
 ![Vite](https://img.shields.io/badge/Vite-8-purple?logo=vite)
 ![Tailwind](https://img.shields.io/badge/Tailwind-4-cyan?logo=tailwindcss)
 
+## Case Study
+
+### The Problem
+
+Support teams using generic dashboards waste 30+ seconds per alert finding context. When a service degrades at 3 AM, the on-call engineer needs to know: *Which service? How bad? What's the timeline?* Generic dashboards show metrics but hide the narrative.
+
+### The Approach
+
+Built a domain-specific monitoring dashboard that surfaces the right information for triage decisions:
+
+- **Heartbeat bars** — Instant visual pulse of service health over time, not just current state
+- **Sparklines** — Response time trends at a glance, no need to click into graphs
+- **Certificate expiry warnings** — Proactive alerts before SSL becomes an incident
+- **Compact stats strip** — One-line summary: "3 Up · 0 Down · 1 Degraded" instead of four towering cards
+
+### Key Design Decisions
+
+| Decision | Why |
+|----------|-----|
+| Dark theme with emerald accent | NOC environments need low-eye-strain interfaces; green = healthy is universal |
+| Split-panel incident view | Context stays visible while drilling into details — no navigation loss |
+| Inline severity badges | Critical/Warning/Info at a glance without reading text |
+| Hover states via CSS, not JS | Code review signal: engineering maturity, not junior patterns |
+
+### What This Proves
+
+I understand production monitoring workflows and build tools that reduce MTTR (Mean Time To Resolution). This isn't a generic dashboard — it's designed for the specific cognitive load of on-call triage.
+
+---
+
 ## Screenshots
 
 Current captures from the live remake are saved under `docs/screenshots/`.

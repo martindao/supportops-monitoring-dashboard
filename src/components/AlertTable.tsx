@@ -1,46 +1,48 @@
+import { useState } from 'react';
 import type { Alert } from '../types/monitoring';
 
 interface AlertTableProps {
   alerts: Alert[];
   onAlertClick?: (alert: Alert) => void;
   onAcknowledge?: (alertId: string) => void;
+  selectedAlertId?: string | null;
 }
 
 const severityConfig = {
   critical: {
-    bgColor: 'bg-rose-500/10',
-    textColor: 'text-rose-500',
-    borderColor: 'border-rose-500/30',
+    bgColor: 'var(--semantic-critical-muted)',
+    textColor: 'var(--semantic-critical)',
+    borderColor: 'rgba(239, 68, 68, 0.25)',
     label: 'Critical',
   },
   warning: {
-    bgColor: 'bg-amber-500/10',
-    textColor: 'text-amber-500',
-    borderColor: 'border-amber-500/30',
+    bgColor: 'var(--accent-secondary-muted)',
+    textColor: 'var(--accent-secondary)',
+    borderColor: 'rgba(245, 158, 11, 0.25)',
     label: 'Warning',
   },
   info: {
-    bgColor: 'bg-blue-500/10',
-    textColor: 'text-blue-500',
-    borderColor: 'border-blue-500/30',
+    bgColor: 'var(--semantic-info-muted)',
+    textColor: 'var(--semantic-info)',
+    borderColor: 'rgba(59, 130, 246, 0.25)',
     label: 'Info',
   },
 };
 
 const statusConfig = {
   active: {
-    bgColor: 'bg-rose-500/10',
-    textColor: 'text-rose-500',
+    bgColor: 'var(--semantic-critical-muted)',
+    textColor: 'var(--semantic-critical)',
     label: 'Active',
   },
   acknowledged: {
-    bgColor: 'bg-amber-500/10',
-    textColor: 'text-amber-500',
+    bgColor: 'var(--accent-secondary-muted)',
+    textColor: 'var(--accent-secondary)',
     label: 'Acknowledged',
   },
   resolved: {
-    bgColor: 'bg-emerald-500/10',
-    textColor: 'text-emerald-500',
+    bgColor: 'var(--accent-primary-muted)',
+    textColor: 'var(--accent-primary)',
     label: 'Resolved',
   },
 };
@@ -59,36 +61,69 @@ function formatTimeAgo(timestamp: string): string {
   return `${diffDays}d ago`;
 }
 
-export function AlertTable({ alerts, onAlertClick, onAcknowledge }: AlertTableProps) {
+export function AlertTable({ alerts, onAlertClick, onAcknowledge, selectedAlertId }: AlertTableProps) {
+  const [internalSelectedId, setInternalSelectedId] = useState<string | null>(null);
+  const selectedId = selectedAlertId ?? internalSelectedId;
   if (alerts.length === 0) {
     return (
-      <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-8 text-center">
-        <p className="text-gray-500">No active alerts</p>
+      <div
+        className="rounded-xl p-8 text-center"
+        style={{
+          background: 'var(--surface-800)',
+          border: '1px solid var(--border-subtle)'
+        }}
+      >
+        <p style={{ color: 'var(--text-500)' }}>No active alerts</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden">
+    <div
+      className="rounded-xl overflow-hidden"
+      style={{
+        background: 'var(--surface-800)',
+        border: '1px solid var(--border-subtle)',
+        boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.03)'
+      }}
+    >
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-800">
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+          <tr style={{ borderBottom: '1px solid var(--border-subtle)' }}>
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Severity
             </th>
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Service
             </th>
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Title
             </th>
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Time
             </th>
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Status
             </th>
-            <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-4 py-3">
+            <th
+              className="text-left text-[10px] font-semibold uppercase tracking-widest px-4 py-3"
+              style={{ color: 'var(--text-500)' }}
+            >
               Action
             </th>
           </tr>
@@ -98,51 +133,79 @@ export function AlertTable({ alerts, onAlertClick, onAcknowledge }: AlertTablePr
             const severity = severityConfig[alert.severity];
             const status = statusConfig[alert.status];
 
-            return (
-              <tr
-                key={alert.id}
-                onClick={() => onAlertClick?.(alert)}
-                className="border-b border-gray-800 last:border-b-0 hover:bg-gray-800/50 transition-colors cursor-pointer"
-              >
+        return (
+        <tr
+          key={alert.id}
+          onClick={() => {
+            setInternalSelectedId(alert.id);
+            onAlertClick?.(alert);
+          }}
+          className={`alert-table-row cursor-pointer transition-colors ${selectedId === alert.id ? 'alert-row-selected' : ''}`}
+          style={{
+            borderBottom: '1px solid var(--border-subtle)',
+            background: selectedId === alert.id ? 'var(--surface-700)' : 'transparent'
+          }}
+        >
                 <td className="px-4 py-3">
                   <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${severity.bgColor} ${severity.textColor} ${severity.borderColor}`}
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold"
+                    style={{
+                      background: severity.bgColor,
+                      color: severity.textColor,
+                      border: `1px solid ${severity.borderColor}`
+                    }}
                   >
                     {severity.label}
                   </span>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-gray-400 capitalize">
+                  <span
+                    className="text-xs font-medium capitalize"
+                    style={{ color: 'var(--text-400)' }}
+                  >
                     {alert.serviceId.replace('-', ' ')}
                   </span>
                 </td>
                 <td className="px-4 py-3">
                   <div>
-                    <p className="text-sm font-medium text-gray-200">{alert.title}</p>
-                    <p className="text-xs text-gray-500 mt-0.5">{alert.message}</p>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-200)' }}>
+                      {alert.title}
+                    </p>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-500)' }}>
+                      {alert.message}
+                    </p>
                   </div>
                 </td>
                 <td className="px-4 py-3">
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs tabular-nums" style={{ color: 'var(--text-500)' }}>
                     {formatTimeAgo(alert.timestamp)}
                   </span>
                 </td>
                 <td className="px-4 py-3">
                   <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${status.bgColor} ${status.textColor}`}
+                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                    style={{
+                      background: status.bgColor,
+                      color: status.textColor
+                    }}
                   >
                     {status.label}
                   </span>
                 </td>
                 <td className="px-4 py-3">
                   {alert.status === 'active' && onAcknowledge && (
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onAcknowledge(alert.id);
-                      }}
-                      className="px-2.5 py-1 text-xs font-medium text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded hover:bg-amber-500/20 transition-colors"
-                    >
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAcknowledge(alert.id);
+                }}
+                className="ack-btn px-2.5 py-1 text-xs font-semibold rounded transition-colors"
+                style={{
+                  color: 'var(--accent-secondary)',
+                  background: 'var(--accent-secondary-muted)',
+                  border: '1px solid rgba(245, 158, 11, 0.25)'
+                }}
+              >
                       Acknowledge
                     </button>
                   )}

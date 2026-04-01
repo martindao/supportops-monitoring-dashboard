@@ -31,12 +31,15 @@ describe('ServiceCard', () => {
 
   it('displays uptime percentage', () => {
     render(<ServiceCard service={mockService} />);
-    expect(screen.getByText('99.9%')).toBeInTheDocument();
+    // Text is split across elements: "99.9" + "%" 
+    expect(screen.getByText('99.9')).toBeInTheDocument();
+    expect(screen.getByText('%')).toBeInTheDocument();
   });
 
   it('displays average response time', () => {
     render(<ServiceCard service={mockService} />);
-    expect(screen.getByText('42ms avg')).toBeInTheDocument();
+    // Text is split with whitespace: "42" + " " + "ms"
+    expect(screen.getByText(/42\s*ms/)).toBeInTheDocument();
   });
 
   it('shows correct health badge', () => {

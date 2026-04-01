@@ -11,16 +11,16 @@ interface IncidentPanelProps {
 }
 
 const statusConfig = {
-  open: { label: 'Open', color: 'text-rose-500 bg-rose-500/10 border-rose-500/30' },
-  investigating: { label: 'Investigating', color: 'text-amber-500 bg-amber-500/10 border-amber-500/30' },
-  identified: { label: 'Identified', color: 'text-blue-500 bg-blue-500/10 border-blue-500/30' },
-  resolved: { label: 'Resolved', color: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/30' },
+  open: { label: 'Open', textColor: 'var(--semantic-critical)', bgColor: 'var(--semantic-critical-muted)', borderColor: 'rgba(239, 68, 68, 0.25)' },
+  investigating: { label: 'Investigating', textColor: 'var(--accent-secondary)', bgColor: 'var(--accent-secondary-muted)', borderColor: 'rgba(245, 158, 11, 0.25)' },
+  identified: { label: 'Identified', textColor: 'var(--semantic-info)', bgColor: 'var(--semantic-info-muted)', borderColor: 'rgba(59, 130, 246, 0.25)' },
+  resolved: { label: 'Resolved', textColor: 'var(--accent-primary)', bgColor: 'var(--accent-primary-muted)', borderColor: 'rgba(16, 185, 129, 0.25)' },
 };
 
 const severityConfig = {
-  critical: { label: 'Critical', color: 'text-rose-500' },
-  warning: { label: 'Warning', color: 'text-amber-500' },
-  info: { label: 'Info', color: 'text-blue-500' },
+  critical: { label: 'Critical', color: 'var(--semantic-critical)' },
+  warning: { label: 'Warning', color: 'var(--accent-secondary)' },
+  info: { label: 'Info', color: 'var(--semantic-info)' },
 };
 
 export function IncidentPanel({ incident, alerts, isOpen, onClose }: IncidentPanelProps) {
@@ -51,53 +51,119 @@ export function IncidentPanel({ incident, alerts, isOpen, onClose }: IncidentPan
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+        className="fixed inset-0 z-40"
+        style={{
+          background: 'rgba(0, 0, 0, 0.7)',
+          backdropFilter: 'blur(8px)'
+        }}
         onClick={onClose}
       />
 
       {/* Panel */}
-      <div className="fixed inset-y-0 right-0 w-full max-w-lg bg-gray-900 border-l border-gray-800 shadow-2xl z-50 overflow-y-auto">
+      <div
+        className="fixed inset-y-0 right-0 w-full max-w-lg z-50 overflow-y-auto"
+        style={{
+          background: 'linear-gradient(180deg, var(--surface-900) 0%, var(--surface-950) 100%)',
+          borderLeft: '1px solid var(--border-subtle)',
+          boxShadow: '-20px 0 60px rgba(0, 0, 0, 0.5)'
+        }}
+      >
         <div className="p-6">
           {/* Header */}
           <div className="flex items-start justify-between mb-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <span className="text-xs font-mono text-gray-500">{incident.id}</span>
-                <span className={`px-2 py-0.5 rounded text-xs font-medium border ${status.color}`}>
+                <span
+                  className="text-[10px] font-mono font-medium"
+                  style={{ color: 'var(--text-500)' }}
+                >
+                  {incident.id}
+                </span>
+                <span
+                  className="px-2 py-0.5 rounded text-xs font-semibold"
+                  style={{
+                    color: status.textColor,
+                    background: status.bgColor,
+                    border: `1px solid ${status.borderColor}`
+                  }}
+                >
                   {status.label}
                 </span>
               </div>
-              <h2 className="text-xl font-semibold text-gray-100">{incident.title}</h2>
+              <h2
+                className="text-xl font-semibold tracking-tight"
+                style={{ color: 'var(--text-100)' }}
+              >
+                {incident.title}
+              </h2>
             </div>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-            >
-              <X className="w-5 h-5 text-gray-400" />
+          <button
+            onClick={onClose}
+            className="incident-close-btn p-2 rounded-lg transition-colors"
+            style={{
+              background: 'var(--surface-800)',
+              border: '1px solid var(--border-subtle)'
+            }}
+          >
+              <X className="w-4 h-4" style={{ color: 'var(--text-400)' }} />
             </button>
           </div>
 
           {/* Details */}
-          <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gray-800/50 rounded-lg">
+          <div
+            className="grid grid-cols-2 gap-4 mb-6 p-4 rounded-xl"
+            style={{
+              background: 'var(--surface-800)',
+              border: '1px solid var(--border-subtle)'
+            }}
+          >
             <div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider">Severity</span>
-              <p className={`text-sm font-medium mt-1 ${severity.color}`}>{severity.label}</p>
+              <span
+                className="text-[10px] uppercase tracking-widest font-medium"
+                style={{ color: 'var(--text-500)' }}
+              >
+                Severity
+              </span>
+              <p
+                className="text-sm font-semibold mt-1"
+                style={{ color: severity.color }}
+              >
+                {severity.label}
+              </p>
             </div>
             <div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider">Service</span>
-              <p className="text-sm font-medium text-gray-300 mt-1 capitalize">
+              <span
+                className="text-[10px] uppercase tracking-widest font-medium"
+                style={{ color: 'var(--text-500)' }}
+              >
+                Service
+              </span>
+              <p
+                className="text-sm font-medium mt-1 capitalize"
+                style={{ color: 'var(--text-300)' }}
+              >
                 {incident.serviceId.replace('-', ' ')}
               </p>
             </div>
             <div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider">Created</span>
-              <p className="text-sm text-gray-400 mt-1">
+              <span
+                className="text-[10px] uppercase tracking-widest font-medium"
+                style={{ color: 'var(--text-500)' }}
+              >
+                Created
+              </span>
+              <p className="text-sm mt-1" style={{ color: 'var(--text-400)' }}>
                 {new Date(incident.createdAt).toLocaleString()}
               </p>
             </div>
             <div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider">Updated</span>
-              <p className="text-sm text-gray-400 mt-1">
+              <span
+                className="text-[10px] uppercase tracking-widest font-medium"
+                style={{ color: 'var(--text-500)' }}
+              >
+                Updated
+              </span>
+              <p className="text-sm mt-1" style={{ color: 'var(--text-400)' }}>
                 {new Date(incident.updatedAt).toLocaleString()}
               </p>
             </div>
@@ -105,7 +171,10 @@ export function IncidentPanel({ incident, alerts, isOpen, onClose }: IncidentPan
 
           {/* Timeline */}
           <div className="mb-6">
-            <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wider mb-4">
+            <h3
+              className="text-[10px] font-semibold uppercase tracking-widest mb-4"
+              style={{ color: 'var(--text-500)' }}
+            >
               Timeline
             </h3>
             <Timeline events={incident.timeline} />
@@ -114,30 +183,46 @@ export function IncidentPanel({ incident, alerts, isOpen, onClose }: IncidentPan
           {/* Related Alerts */}
           {relatedAlertsList.length > 0 && (
             <div>
-              <h3 className="text-sm font-medium text-gray-300 uppercase tracking-wider mb-4">
+              <h3
+                className="text-[10px] font-semibold uppercase tracking-widest mb-4"
+                style={{ color: 'var(--text-500)' }}
+              >
                 Related Alerts
               </h3>
               <div className="space-y-2">
                 {relatedAlertsList.map((alert) => (
                   <div
                     key={alert.id}
-                    className="p-3 bg-gray-800/50 rounded-lg border border-gray-800"
+                    className="p-3 rounded-lg"
+                    style={{
+                      background: 'var(--surface-800)',
+                      border: '1px solid var(--border-subtle)'
+                    }}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-mono text-gray-500">{alert.id}</span>
                       <span
-                        className={`text-xs capitalize ${
-                          alert.severity === 'critical'
-                            ? 'text-rose-500'
-                            : alert.severity === 'warning'
-                            ? 'text-amber-500'
-                            : 'text-blue-500'
-                        }`}
+                        className="text-[10px] font-mono font-medium"
+                        style={{ color: 'var(--text-500)' }}
+                      >
+                        {alert.id}
+                      </span>
+                      <span
+                        className="text-[10px] uppercase tracking-wide font-semibold"
+                        style={{
+                          color:
+                            alert.severity === 'critical'
+                              ? 'var(--semantic-critical)'
+                              : alert.severity === 'warning'
+                                ? 'var(--accent-secondary)'
+                                : 'var(--semantic-info)'
+                        }}
                       >
                         {alert.severity}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-300">{alert.title}</p>
+                    <p className="text-sm" style={{ color: 'var(--text-300)' }}>
+                      {alert.title}
+                    </p>
                   </div>
                 ))}
               </div>
