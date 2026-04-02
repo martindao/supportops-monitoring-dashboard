@@ -43,16 +43,16 @@ describe('AlertTable', () => {
 
   it('shows correct severity badges', () => {
     render(<AlertTable alerts={mockAlerts} />);
-    expect(screen.getByText('Critical')).toBeInTheDocument();
-    expect(screen.getByText('Warning')).toBeInTheDocument();
-    expect(screen.getByText('Info')).toBeInTheDocument();
+    expect(screen.getByText('critical')).toBeInTheDocument();
+    expect(screen.getByText('warning')).toBeInTheDocument();
+    expect(screen.getByText('info')).toBeInTheDocument();
   });
 
   it('shows correct status badges', () => {
     render(<AlertTable alerts={mockAlerts} />);
-    expect(screen.getByText('Active')).toBeInTheDocument();
-    expect(screen.getByText('Acknowledged')).toBeInTheDocument();
-    expect(screen.getByText('Resolved')).toBeInTheDocument();
+    expect(screen.getByText('active')).toBeInTheDocument();
+    expect(screen.getByText('acknowledged')).toBeInTheDocument();
+    expect(screen.getByText('resolved')).toBeInTheDocument();
   });
 
   it('shows empty state when no alerts', () => {
