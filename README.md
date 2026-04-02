@@ -37,22 +37,6 @@ I understand production monitoring workflows and build tools that reduce MTTR (M
 
 ---
 
-## Screenshots
-
-Current captures from the live remake are saved under `docs/screenshots/`.
-
-| Dashboard Overview | Alert Table | Incident Panel |
-|-------------------|-------------|----------------|
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Alerts](docs/screenshots/alerts.png) | ![Incident](docs/screenshots/incident.png) |
-
-## Source inspiration disclosure
-
-This portfolio rebuild is visually and structurally inspired by open-source monitoring platforms:
-
-- **[Uptime Kuma](https://github.com/louislam/uptime-kuma)** — service health visualization, status page patterns, operational dashboard layout
-
-This is an original React implementation for portfolio use. The goal is to study real support product patterns and recreate the feel of that workflow in a smaller standalone app. No source code was copied from those projects.
-
 ## Support relevance
 
 This repo is meant to show work that maps directly to application support and production triage responsibilities.
@@ -256,11 +240,7 @@ This project demonstrates key competencies for support engineering roles:
 - SLA awareness and deadline tracking
 
 ### Portfolio Value
-This is an original inspired rebuild, not a direct clone. It demonstrates understanding of support operations without requiring production infrastructure.
-
-## Inspiration
-
-This project was inspired by [Uptime Kuma](https://github.com/louislam/uptime-kuma), an open-source monitoring platform. It is an original rebuild for portfolio demonstration purposes, not a direct clone.
+This is an original portfolio project built by Martin Dao to demonstrate production monitoring, alert triage, and incident workflow design in a reviewer-friendly format.
 
 ## License
 
